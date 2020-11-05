@@ -9,7 +9,8 @@
 
   @see This will overwrite when the buffer is full.
 
-  Ported from Mbed OS 2.0
+  Ported from Mbed OS 2.0.
+  Depending on C++11.
 
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */

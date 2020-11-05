@@ -7,6 +7,8 @@
 
   @brief  A MWX Driver for AQM0802 LCD with Sitronix ST7032i Controller
 
+  Depending on C++11.
+
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
@@ -14,13 +16,10 @@
 
 // Methods ////////////////////////////////////////////////////////////////////
 wx::AQM0802::AQM0802(void)
+  : slaveAddress{0x3E},
+    hasInit{false},
+    currentRow{0}
 {
-  // I2C slave address for st7032i
-  this->slaveAddress = 0x3E;
-
-  this->hasInit = false;
-  this->currentRow = 0;
-
   return;
 }
 
@@ -73,7 +72,7 @@ void wx::AQM0802::init(void)
 
 void wx::AQM0802::clearAll(void)
 {
-  if ( !this->hasInit ) {
+  if (!this->hasInit) {
     return;
   }
 
@@ -85,7 +84,7 @@ void wx::AQM0802::clearAll(void)
 
 void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 {
-  if ( !this->hasInit ) {
+  if (!this->hasInit) {
     return;
   }
 
@@ -102,7 +101,7 @@ void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 
 void wx::AQM0802::putc(const char c)
 {
-  if ( !this->hasInit ) {
+  if (!this->hasInit) {
     return;
   }
 
@@ -113,7 +112,7 @@ void wx::AQM0802::putc(const char c)
 
 int wx::AQM0802::printf(const char* format, ...)
 {
-  if ( !this->hasInit ) {
+  if (!this->hasInit) {
     return 0;
   }
 
@@ -127,18 +126,18 @@ int wx::AQM0802::printf(const char* format, ...)
   wroteLength = vsnprintf_(stringBuffer, 128, format, arg); // vsnprintf_ in TWENET
   va_end(arg);
 
-  if( wroteLength < 0 || wroteLength > 128 ) {
+  if (wroteLength < 0 || wroteLength > 128) {
     return 0;
   }
 
-  for ( int i = 0; i < wroteLength; i++ ) {
-    if ( stringBuffer[i] != '\n' ) {
+  for (int i = 0; i < wroteLength; i++) {
+    if (stringBuffer[i] != '\n') {
       wx::AQM0802::putc(stringBuffer[i]);
     } else {
       // go to new line
       wx::AQM0802::setCursorAt(this->currentRow + 1, 0);
       // clear new line
-      for ( int j = 0; j < 8; j++ ) {
+      for (int j = 0; j < 8; j++) {
         wx::AQM0802::putc(' ');
       }
       // go ahead

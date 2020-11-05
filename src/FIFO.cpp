@@ -9,7 +9,8 @@
 
   @see This will overwrite when the buffer is full.
 
-  Ported from Mbed OS 2.0
+  Ported from Mbed OS 2.0.
+  Depending on C++11.
 
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
@@ -18,12 +19,18 @@
 
 // Methods ////////////////////////////////////////////////////////////////////
 template <class T>
-wx::FIFO<T>::FIFO(uint32_t bufsize){
-  this->buffer = new T[bufsize];
-  this->size = bufsize;
-  this->getindex = 0;
-  this->putindex = 0;
-  this->count = 0;
+wx::FIFO<T>::FIFO(uint32_t bufsize)
+  : buffer{new T[bufsize]},
+    size{bufsize},
+    getindex{0},
+    putindex{0},
+    count{0}
+{
+  // this->buffer = new T[bufsize];
+  // this->size = bufsize;
+  // this->getindex = 0;
+  // this->putindex = 0;
+  // this->count = 0;
   return;
 }
 
@@ -57,14 +64,14 @@ T wx::FIFO<T>::get(void){
 
   DISABLE_INTERRUPTS;
 
-  if ( this->count <= 0 ){
+  if (this->count <= 0) {
     RESTORE_INTERUUPTS;
     return 0;
   }
 
   getdata = this->buffer[this->getindex];
   this->getindex++;
-  if ( this->getindex >= this->size ){  //When the index is in the terminus of the buffer
+  if (this->getindex >= this->size) {  //When the index is in the terminus of the buffer
     this->getindex = 0;
   }
   this->count--;
@@ -80,7 +87,7 @@ T wx::FIFO<T>::peek(void){
 
   DISABLE_INTERRUPTS;
 
-  if ( this->count <= 0 ){  //When the buffer is empty
+  if (this->count <= 0) {  //When the buffer is empty
     RESTORE_INTERUUPTS;
     return 0;
   }
@@ -96,7 +103,7 @@ void wx::FIFO<T>::put(const T putdata){
 
   this->buffer[this->putindex] = putdata;
   this->putindex++;
-  if ( this->putindex >= this->size ){  // When the index is in the terminus of the buffer
+  if (this->putindex >= this->size) {  // When the index is in the terminus of the buffer
     this->putindex = 0;
   }
   this->count++;

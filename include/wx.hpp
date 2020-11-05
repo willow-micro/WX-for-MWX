@@ -12,3 +12,10 @@
 #include "AQM0802.hpp"
 #include "ATP3011.hpp"
 #include "FIFO.hpp"
+#include "Timekeeper.hpp"
+
+namespace wx {
+
+#define InitGlobalObject(className,objName)   objName = new ((void*)&objName) className()
+
+}

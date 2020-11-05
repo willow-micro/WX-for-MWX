@@ -9,6 +9,8 @@
 
   A Part of the Willow eXtension Library.
 
+  Depending on C++11.
+
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
@@ -35,6 +37,7 @@ private:
   uint8_t slaveAddress;
   bool hasInit;
   uint8_t currentRow;
+
   void writeByte(const CtrlByte_e type, const uint8_t data);
 
 public:

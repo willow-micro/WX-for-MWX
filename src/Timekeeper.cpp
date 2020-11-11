@@ -14,6 +14,11 @@
 
 #include "Timekeeper.hpp"
 
+
+// Because of a limitation of JN516x, cannot use static instance in a static method.
+// So, initialize the private static member instance here.
+wx::Timekeeper wx::Timekeeper::instance = wx::Timekeeper();
+
 // Methods ////////////////////////////////////////////////////////////////////
 
 wx::Timekeeper::Timekeeper(void)
@@ -25,7 +30,8 @@ wx::Timekeeper::Timekeeper(void)
     alarmLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     cyclicLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     alarmEnableArray{false, false, false, false, false, false, false, false, false, false},
-    cyclicEnableArray{false, false, false, false, false, false, false, false, false, false}
+    cyclicEnableArray{false, false, false, false, false, false, false, false, false, false},
+    hasInit{false}
 {
   return;
 }
@@ -35,8 +41,30 @@ wx::Timekeeper::~Timekeeper(void)
   return;
 }
 
+void wx::Timekeeper::init(void)
+{
+  wxTime = 0;
+  for (int i = 0; i < TIMEKEEPER_ISR_MAX; i++) {
+    alarmISRPtrArray[i] = NULL;
+    cyclicISRPtrArray[i] = NULL;
+    alarmDelayTimeArray[i] = 0;
+    cyclicCycleTimeArray[i] = 0;
+    alarmLastTimeArray[i] = 0;
+    cyclicLastTimeArray[i] = 0;
+    alarmEnableArray[i] = false;
+    cyclicEnableArray[i] = false;
+  }
+  hasInit = true;
+
+  return;
+}
+
 void wx::Timekeeper::updateEveryMs(void)
 {
+  if (!hasInit) {
+    return;
+  }
+
   // Increment the wxTime
   this->wxTime = (this->wxTime < WXTIME_MAX) ? this->wxTime + 1 : 0;
 

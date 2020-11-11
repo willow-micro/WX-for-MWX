@@ -8,14 +8,25 @@
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
+#ifndef WX_H
+#define WX_H
 
 #include "AQM0802.hpp"
 #include "ATP3011.hpp"
 #include "FIFO.hpp"
 #include "Timekeeper.hpp"
 
+
 namespace wx {
 
-#define InitGlobalObject(className,objName)   objName = new ((void*)&objName) className()
+inline boolean isPullupButtonOn(uint32_t state, uint32_t mask, uint8_t pinNum)
+{
+  if ((~(mask & 0x80000000) & ~(state & (1UL << pinNum))) == 0xFFFFFFFF) {
+    return true;
+  }
+  return false;
+}
 
 }
+
+#endif

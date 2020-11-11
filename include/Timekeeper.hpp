@@ -7,6 +7,8 @@
 
   @brief  Call a function after a specified delay or repeatedly at a specified rate
 
+  NOTE: This is a SINGLETON class.
+
   @see    alarm/cyclic id: 0-9
 
   Depending on C++11.
@@ -44,9 +46,23 @@ private:
   bool alarmEnableArray[TIMEKEEPER_ISR_MAX];
   bool cyclicEnableArray[TIMEKEEPER_ISR_MAX];
 
-public:
+  bool hasInit;
+
+private:
   Timekeeper(void);
   ~Timekeeper(void);
+  static Timekeeper instance;
+
+public:
+  static Timekeeper& getInstance() {
+    // Because of a limitation of JN516x, cannot use static instance in a static method.
+    // static Timekeeper tk;
+    // return tk;
+    return instance;
+  }
+
+public:
+  void init(void);
   void updateEveryMs(void);
   void setAlarm(const int id, timekeeperISRPtr_t isr, const uint32_t delayTimeMs);
   void setCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs);

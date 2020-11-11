@@ -16,9 +16,9 @@
 
 // Methods ////////////////////////////////////////////////////////////////////
 wx::AQM0802::AQM0802(void)
-  : slaveAddress{0x3E},
-    hasInit{false},
-    currentRow{0}
+  : slaveAddress(0x3E),
+    hasInit(false),
+    currentRow(0)
 {
   return;
 }
@@ -42,6 +42,11 @@ void wx::AQM0802::writeByte(const CtrlByte_e type, const uint8_t data)
 
 void wx::AQM0802::init(void)
 {
+  this->slaveAddress = 0x3E;
+  this->hasInit = false;
+  this->currentRow = 0;
+
+  Wire.begin(WIRE_CONF::WIRE_400KHZ, false);
   delay(40);
   // Function Set: 8-bit bus, 2-line, normal font, normal instruction
   wx::AQM0802::writeByte(INSTRUCTION, 0x38);
@@ -72,11 +77,12 @@ void wx::AQM0802::init(void)
 
 void wx::AQM0802::clearAll(void)
 {
-  if (!this->hasInit) {
+  if (!(this->hasInit)) {
     return;
   }
 
   wx::AQM0802::writeByte(INSTRUCTION, 0x01);
+  delay(1);
   this->currentRow = 0;
 
   return;
@@ -84,7 +90,7 @@ void wx::AQM0802::clearAll(void)
 
 void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 {
-  if (!this->hasInit) {
+  if (!(this->hasInit)) {
     return;
   }
 
@@ -101,7 +107,7 @@ void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 
 void wx::AQM0802::putc(const char c)
 {
-  if (!this->hasInit) {
+  if (!(this->hasInit)) {
     return;
   }
 
@@ -112,7 +118,7 @@ void wx::AQM0802::putc(const char c)
 
 int wx::AQM0802::printf(const char* format, ...)
 {
-  if (!this->hasInit) {
+  if (!(this->hasInit)) {
     return 0;
   }
 
@@ -130,18 +136,21 @@ int wx::AQM0802::printf(const char* format, ...)
     return 0;
   }
 
+  int currentLineCharCount = 0;
   for (int i = 0; i < wroteLength; i++) {
-    if (stringBuffer[i] != '\n') {
-      wx::AQM0802::putc(stringBuffer[i]);
-    } else {
+    if (stringBuffer[i] == '\n') {
       // go to new line
       wx::AQM0802::setCursorAt(this->currentRow + 1, 0);
-      // clear new line
-      for (int j = 0; j < 8; j++) {
-        wx::AQM0802::putc(' ');
-      }
-      // go ahead
-      wx::AQM0802::setCursorAt(this->currentRow, 0);
+      currentLineCharCount = 0;
+    } else if (currentLineCharCount % 8 == 0 && currentLineCharCount != 0) {
+      // go to new char
+      wx::AQM0802::setCursorAt(this->currentRow + 1, 0);
+      // put the letter
+      wx::AQM0802::putc(stringBuffer[i]);
+      currentLineCharCount++;
+    } else {
+      wx::AQM0802::putc(stringBuffer[i]);
+      currentLineCharCount++;
     }
   }
 

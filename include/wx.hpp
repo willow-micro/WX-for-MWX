@@ -11,6 +11,7 @@
 #ifndef WX_H
 #define WX_H
 
+#include "wxcommon.hpp"
 #include "AQM0802.hpp"
 #include "ATP3011.hpp"
 #include "FIFO.hpp"
@@ -18,14 +19,6 @@
 
 
 namespace wx {
-
-inline boolean isPullupButtonOn(uint32_t state, uint32_t mask, uint8_t pinNum)
-{
-  if ((~(mask & 0x80000000) & ~(state & (1UL << pinNum))) == 0xFFFFFFFF) {
-    return true;
-  }
-  return false;
-}
 
 }
 

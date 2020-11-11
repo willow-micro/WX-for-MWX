@@ -16,6 +16,7 @@
 // Modules ////////////////////////////////////////////////////////////////////
 #include <TWELITE>
 #include <string.h>
+#include "wxcommon.hpp"
 
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {
@@ -23,11 +24,14 @@ namespace wx {
 // Class //////////////////////////////////////////////////////////////////////
 class ATP3011 {
 private:
+  bool isAvailable;
 
 public:
   ATP3011(void);
   ~ATP3011(void);
   void init(void);
+  void speech(const char* const fstr);
+  bool available(void);
 };
 
 }

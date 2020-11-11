@@ -21,6 +21,7 @@
 #include <TWELITE>
 #include <string.h>
 #include <stdarg.h>
+#include "wxcommon.hpp"
 
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {

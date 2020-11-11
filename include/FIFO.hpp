@@ -20,19 +20,10 @@
 
 // Modules ////////////////////////////////////////////////////////////////////
 #include <stdint.h>
-
+#include "wxcommon.hpp"
 
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {
-
-// Disable all interuupts and save the status of interrupts.
-// This macro is usable at ONLY JN516x Series.
-#define DISABLE_INTERRUPTS asm volatile ("b.di;" : : )
-
-// Enable all interuupts when the status of interrupts is ENABLED.
-// This macro is usable at ONLY JN516x Series.
-#define RESTORE_INTERUUPTS asm volatile ("b.ei;" : : )
-
 
 // Class //////////////////////////////////////////////////////////////////////
 //! FIFO

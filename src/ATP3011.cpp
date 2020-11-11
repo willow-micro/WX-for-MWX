@@ -15,10 +15,8 @@
 // Methods ////////////////////////////////////////////////////////////////////
 
 wx::ATP3011::ATP3011(void)
+  : isAvailable(false)
 {
-  // Required: 2400bps~76800bps
-  Serial.begin(9600);
-
   return;
 }
 
@@ -29,7 +27,42 @@ wx::ATP3011::~ATP3011(void)
 
 void wx::ATP3011::init(void)
 {
+  this->isAvailable = false;
+
+  // Required: 2400bps~76800bps
+  Serial.begin(9600);
+
   // Baudrate auto set
   Serial.putchar('?');
+
   return;
+}
+
+void wx::ATP3011::speech(const char* const fstr)
+{
+  if (!(this->isAvailable)) {
+    return;
+  }
+
+  Serial.printfmt("%s\r", fstr);
+  this->isAvailable = false;
+
+  return;
+}
+
+bool wx::ATP3011::available(void)
+{
+  uint8_t c;
+  if (Serial.available()) {
+    c = Serial.read();
+    switch (c) {
+    case '>':
+      this->isAvailable = true;
+      break;
+    default:
+      break;
+    }
+  }
+
+  return this->isAvailable;
 }

@@ -43,15 +43,21 @@ private:
 public:
   /*!
     @brief  Create a new FIFO.
-    @param  size Buffer Size.
+    @param  No Parameters.
   */
-  FIFO(uint32_t bufsize);
+  FIFO(void);
 
   /*!
     @brief  Destroy the FIFO.
     @param  No Parameters.
   */
   ~FIFO(void);
+
+  /*!
+    @brief  Initialize the FIFO.
+    @param  size Buffer Size.
+  */
+  void init(uint32_t bufsize);
 
   /*!
     @brief  Clear the buffer.

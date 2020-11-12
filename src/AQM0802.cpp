@@ -15,14 +15,10 @@
 #include "AQM0802.hpp"
 
 
-// Initialize the state of instance
-bool wx::AQM0802::hasInit = false;
-
-
 // Methods ////////////////////////////////////////////////////////////////////
 wx::AQM0802::AQM0802(void)
-  : slaveAddress(0x3E),
-    currentRow(0)
+  // : slaveAddress(0x3E),
+  //   currentRow(0)
 {
   return;
 }
@@ -72,7 +68,6 @@ void wx::AQM0802::init(void)
   wx::AQM0802::writeByte(INSTRUCTION, 0x01);
   delay(1);
 
-  this->hasInit = true;
   this->currentRow = 0;
 
   return;
@@ -80,10 +75,6 @@ void wx::AQM0802::init(void)
 
 void wx::AQM0802::clearAll(void)
 {
-  if (!(this->hasInit)) {
-    return;
-  }
-
   wx::AQM0802::writeByte(INSTRUCTION, 0x01);
   delay(1);
   this->currentRow = 0;
@@ -93,10 +84,6 @@ void wx::AQM0802::clearAll(void)
 
 void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 {
-  if (!(this->hasInit)) {
-    return;
-  }
-
   uint8_t acAddress = 0x00;            // 7Bits
 
   acAddress |= ( row % 2 == 0 ) ? 0x00 : 0x40;
@@ -110,10 +97,6 @@ void wx::AQM0802::setCursorAt(const uint8_t row, const uint8_t col)
 
 void wx::AQM0802::putc(const char c)
 {
-  if (!(this->hasInit)) {
-    return;
-  }
-
   wx::AQM0802::writeByte(DATA, static_cast<uint8_t>(c));
 
   return;
@@ -121,10 +104,6 @@ void wx::AQM0802::putc(const char c)
 
 int wx::AQM0802::printf(const char* format, ...)
 {
-  if (!(this->hasInit)) {
-    return 0;
-  }
-
   int wroteLength = 0;
   char stringBuffer[128];
 

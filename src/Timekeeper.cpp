@@ -26,15 +26,15 @@ wx::Timekeeper wx::Timekeeper::instance = wx::Timekeeper();
 // Methods ////////////////////////////////////////////////////////////////////
 
 wx::Timekeeper::Timekeeper(void)
-  : wxTime{0},
-    alarmISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-    cyclicISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-    alarmDelayTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    cyclicCycleTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    alarmLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    cyclicLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    alarmEnableArray{false, false, false, false, false, false, false, false, false, false},
-    cyclicEnableArray{false, false, false, false, false, false, false, false, false, false}
+  // : wxTime{0},
+  //   alarmISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+  //   cyclicISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+  //   alarmDelayTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  //   cyclicCycleTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  //   alarmLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  //   cyclicLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  //   alarmEnableArray{false, false, false, false, false, false, false, false, false, false},
+  //   cyclicEnableArray{false, false, false, false, false, false, false, false, false, false}
 {
   return;
 }

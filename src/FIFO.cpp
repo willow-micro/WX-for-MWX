@@ -17,26 +17,26 @@
 
 #include "FIFO.hpp"
 
+
 // Methods ////////////////////////////////////////////////////////////////////
 template <class T>
-wx::FIFO<T>::FIFO(uint32_t bufsize)
-  : buffer{new T[bufsize]},
-    size{bufsize},
-    getindex{0},
-    putindex{0},
-    count{0}
+wx::FIFO<T>::FIFO(void)
 {
-  // this->buffer = new T[bufsize];
-  // this->size = bufsize;
-  // this->getindex = 0;
-  // this->putindex = 0;
-  // this->count = 0;
   return;
 }
 
 template <class T>
 wx::FIFO<T>::~FIFO(void){
-  //delete[] buffer;              // Cannot delete on the MWX
+  return;
+}
+
+template <class T>
+void wx::FIFO<T>::init(uint32_t bufsize){
+  this->buffer = new T[bufsize];
+  this->size = bufsize;
+  this->getindex = 0;
+  this->putindex = 0;
+  this->count = 0;
   return;
 }
 

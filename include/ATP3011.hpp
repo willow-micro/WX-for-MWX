@@ -7,6 +7,8 @@
 
   @brief  A MWX Driver for AquesTalk pico LSI ATP3011
 
+  NOTE: This is a SINGLETON class.
+
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
@@ -18,31 +20,50 @@
 #include <string.h>
 #include "wxcommon.hpp"
 #include "Timekeeper.hpp"
+#include "FIFO.hpp"
 
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {
 
 using wx::Timekeeper;
+using wx::FIFO;
 
-const int PollingCycle = 15;
-const int PollingTkId = 9;
+#define ATP3011_MAX_MESSAGES 16
+#define ATP3011_MAX_MESSAGE_LENGTH 256
+#define ATP3011_MAX_RESERVATIONS 8
+#define ATP3011_POLLING_CYCLE 15
+#define ATP3011_POLLING_TIMEKEEPER_ID 9
 
 
 // Class //////////////////////////////////////////////////////////////////////
 class ATP3011 {
 private:
-  static bool hasInit;
   static bool isAvailable;
+  char messages[ATP3011_MAX_MESSAGES][ATP3011_MAX_MESSAGE_LENGTH];
+  FIFO<uint8_t> *reservationIdQueue;
 
 private:
   static void ISR_polling(void);
 
-public:
+private:
   ATP3011(void);
   ~ATP3011(void);
+  static ATP3011 instance;
+
+public:
+  static ATP3011& getInstance() {
+    return instance;
+  }
+
+public:
   void init(void);
-  result_e speech(const char* fstr);
   bool available(void);
+  void registerMessage(const int id, const char* fstr);
+  void requestMessage(const int id);
+  void update(void);
+
+private:
+  result_e speech(const char* fstr);
 
 };
 

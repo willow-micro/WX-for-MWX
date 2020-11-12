@@ -34,8 +34,6 @@ enum CtrlByte_e {
 // Class //////////////////////////////////////////////////////////////////////
 class AQM0802 {
 private:
-  static bool hasInit;
-
   // I2C slave address for ST7032i
   uint8_t slaveAddress;
   uint8_t currentRow;

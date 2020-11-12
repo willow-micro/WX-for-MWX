@@ -15,9 +15,13 @@
 #include "Timekeeper.hpp"
 
 
+// Initialize the state of instance
+bool wx::Timekeeper::hasInit = false;
+
 // Because of a limitation of JN516x, cannot use static instance in a static method.
 // So, initialize the private static member instance here.
 wx::Timekeeper wx::Timekeeper::instance = wx::Timekeeper();
+
 
 // Methods ////////////////////////////////////////////////////////////////////
 
@@ -30,8 +34,7 @@ wx::Timekeeper::Timekeeper(void)
     alarmLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     cyclicLastTimeArray{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     alarmEnableArray{false, false, false, false, false, false, false, false, false, false},
-    cyclicEnableArray{false, false, false, false, false, false, false, false, false, false},
-    hasInit{false}
+    cyclicEnableArray{false, false, false, false, false, false, false, false, false, false}
 {
   return;
 }
@@ -43,6 +46,10 @@ wx::Timekeeper::~Timekeeper(void)
 
 void wx::Timekeeper::init(void)
 {
+  if (hasInit) {
+    return;
+  }
+
   wxTime = 0;
   for (int i = 0; i < TIMEKEEPER_ISR_MAX; i++) {
     alarmISRPtrArray[i] = NULL;
@@ -114,7 +121,7 @@ void wx::Timekeeper::updateEveryMs(void)
   return;
 }
 
-void wx::Timekeeper::setAlarm(const int id, timekeeperISRPtr_t isr, const uint32_t delayTimeMs)
+void wx::Timekeeper::startAlarm(const int id, timekeeperISRPtr_t isr, const uint32_t delayTimeMs)
 {
   // If an alarm is already exists on specified id
   if (this->alarmEnableArray[id] == true) {
@@ -129,7 +136,7 @@ void wx::Timekeeper::setAlarm(const int id, timekeeperISRPtr_t isr, const uint32
   return;
 }
 
-void wx::Timekeeper::setCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs)
+void wx::Timekeeper::startCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs)
 {
   // If an cyclic is already exists on specified id
   if (this->cyclicEnableArray[id] == true) {

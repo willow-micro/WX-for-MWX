@@ -17,21 +17,33 @@
 #include <TWELITE>
 #include <string.h>
 #include "wxcommon.hpp"
+#include "Timekeeper.hpp"
 
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {
 
+using wx::Timekeeper;
+
+const int PollingCycle = 15;
+const int PollingTkId = 9;
+
+
 // Class //////////////////////////////////////////////////////////////////////
 class ATP3011 {
 private:
-  bool isAvailable;
+  static bool hasInit;
+  static bool isAvailable;
+
+private:
+  static void ISR_polling(void);
 
 public:
   ATP3011(void);
   ~ATP3011(void);
   void init(void);
-  void speech(const char* const fstr);
+  result_e speech(const char* fstr);
   bool available(void);
+
 };
 
 }

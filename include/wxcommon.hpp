@@ -30,6 +30,12 @@ namespace wx {
 #define RESTORE_INTERUUPTS asm volatile ("b.ei;" : : )
 
 
+// Enum ///////////////////////////////////////////////////////////////////////
+enum result_e {
+  WX_OK, WX_ERROR
+};
+
+
 // Basic Utils ////////////////////////////////////////////////////////////////
 inline bool isPullupButtonOn(uint32_t state, uint32_t mask, uint8_t pinNum)
 {

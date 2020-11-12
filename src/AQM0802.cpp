@@ -14,10 +14,14 @@
 
 #include "AQM0802.hpp"
 
+
+// Initialize the state of instance
+bool wx::AQM0802::hasInit = false;
+
+
 // Methods ////////////////////////////////////////////////////////////////////
 wx::AQM0802::AQM0802(void)
   : slaveAddress(0x3E),
-    hasInit(false),
     currentRow(0)
 {
   return;
@@ -43,7 +47,6 @@ void wx::AQM0802::writeByte(const CtrlByte_e type, const uint8_t data)
 void wx::AQM0802::init(void)
 {
   this->slaveAddress = 0x3E;
-  this->hasInit = false;
   this->currentRow = 0;
 
   Wire.begin(WIRE_CONF::WIRE_400KHZ, false);

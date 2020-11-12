@@ -36,6 +36,8 @@ typedef void (* timekeeperISRPtr_t)(void);
 // Class //////////////////////////////////////////////////////////////////////
 class Timekeeper {
 private:
+  static bool hasInit;
+
   uint32_t wxTime;
 
   timekeeperISRPtr_t alarmISRPtrArray[TIMEKEEPER_ISR_MAX];
@@ -46,8 +48,6 @@ private:
   uint32_t cyclicLastTimeArray[TIMEKEEPER_ISR_MAX];
   bool alarmEnableArray[TIMEKEEPER_ISR_MAX];
   bool cyclicEnableArray[TIMEKEEPER_ISR_MAX];
-
-  bool hasInit;
 
 private:
   Timekeeper(void);
@@ -65,8 +65,8 @@ public:
 public:
   void init(void);
   void updateEveryMs(void);
-  void setAlarm(const int id, timekeeperISRPtr_t isr, const uint32_t delayTimeMs);
-  void setCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs);
+  void startAlarm(const int id, timekeeperISRPtr_t isr, const uint32_t delayTimeMs);
+  void startCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs);
   void stopAlarm(const int id);
   void stopCyclic(const int id);
 };

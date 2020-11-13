@@ -57,7 +57,8 @@ void wx::ATP3011::init(void)
 {
   // Initialize messages
   for (int i = 0; i < ATP3011_MAX_MESSAGES; i++) {
-    memset(this->messages[i], ' ', ATP3011_MAX_MESSAGE_LENGTH);
+    memset(this->messages[i], ' ', ATP3011_MAX_MESSAGE_LENGTH - 1);
+    this->messages[i][ATP3011_MAX_MESSAGE_LENGTH - 1] = '\0';
   }
 
   // Initialize reservation queue

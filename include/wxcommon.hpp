@@ -29,12 +29,16 @@ namespace wx {
 // This macro is usable at ONLY JN516x Series.
 #define RESTORE_INTERUUPTS asm volatile ("b.ei;" : : )
 
-
 // Enum ///////////////////////////////////////////////////////////////////////
 enum result_e {
   WX_OK, WX_ERROR
 };
 
+
+// Serial Packet for Packer / Unpacker ////////////////////////////////////////
+#define WX_SERIAL_PACKET_HEADER 0x40  // At Mark, '@'
+#define WX_SERIAL_PACKET_FOOTER 0x0A  // New Line aka LF, '\n'
+#define WX_SERIAL_PACKET_MAX_PAYLOAD_LENGTH 256
 
 // Basic Utils ////////////////////////////////////////////////////////////////
 inline bool isPullupButtonOn(uint32_t state, uint32_t mask, uint8_t pinNum)

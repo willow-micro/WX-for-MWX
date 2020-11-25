@@ -12,6 +12,8 @@
 #define WX_H
 
 #include "wxcommon.hpp"
+#include "SerialPacker.hpp"
+#include "SerialUnpacker.hpp"
 #include "AQM0802.hpp"
 #include "ATP3011.hpp"
 #include "FIFO.hpp"

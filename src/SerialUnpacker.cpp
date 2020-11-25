@@ -79,11 +79,12 @@ bool wx::SerialUnpacker::available(const uint8_t fragment)
   default:
     this->state = WAITING_FOR_HEADER;
     break;
+  }
 
   return isAvailable;
 }
 
-uint8_t unpackPayloadAt(const int index)
+uint8_t wx::SerialUnpacker::unpackPayloadAt(const int index)
 {
   return this->payloadBuffer[index];
 }

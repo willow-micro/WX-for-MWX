@@ -10,8 +10,8 @@
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
-#ifndef SerialPacker_H
-#define SerialPacker_H
+#ifndef SERIALPACKER_H
+#define SERIALPACKER_H
 
 // Modules ////////////////////////////////////////////////////////////////////
 #include <TWELITE>
@@ -29,7 +29,8 @@ private:
 public:
   SerialPacker(void);
   ~SerialPacker(void);
-  result_e pack(uint8_t const srcBuffer, const uint8_t srcLength, uint8_t const destBuffer);
+  void init(void);
+  result_e pack(uint8_t* srcBuffer, const uint8_t srcLength, uint8_t* destBuffer);
 };
 
 }

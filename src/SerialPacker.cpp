@@ -23,8 +23,12 @@ wx::SerialPacker::~SerialPacker(void)
   return;
 }
 
+void wx::SerialPacker::init(void)
+{
+  return;
+}
 
-result_e wx::SerialPacker::pack(uint8_t* srcBuffer, const uint8_t srcLength, uint8_t* destBuffer)
+wx::result_e wx::SerialPacker::pack(uint8_t* srcBuffer, const uint8_t srcLength, uint8_t* destBuffer)
 {
   if (srcLength <= 0) {
     return WX_ERROR;
@@ -41,7 +45,7 @@ result_e wx::SerialPacker::pack(uint8_t* srcBuffer, const uint8_t srcLength, uin
     checksum += *(srcBuffer++);
   }
   // Checksum
-  *(destBuffer++) = checkSum;
+  *(destBuffer++) = checksum;
   // Footer
   *(destBuffer++) = WX_SERIAL_PACKET_FOOTER;
 

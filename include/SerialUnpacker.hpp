@@ -10,8 +10,8 @@
   @copyright 2020 (C) Takuma Kawamura All Rights Reserved.
 */
 
-#ifndef SerialUnpacker_H
-#define SerialUnpacker_H
+#ifndef SERIALUNPACKER_H
+#define SERIALUNPACKER_H
 
 // Modules ////////////////////////////////////////////////////////////////////
 #include <TWELITE>
@@ -27,7 +27,7 @@ enum serial_unpacker_state_e {
   COLLECTING_PAYLOAD,
   WAITING_FOR_CHECKSUM,
   WAITING_FOR_FOOTER
-}
+};
 
 // Class //////////////////////////////////////////////////////////////////////
 class SerialUnpacker {

@@ -39,13 +39,13 @@ wx::result_e wx::SerialPacker::pack(uint8_t* srcBuffer, const uint8_t srcLength,
   // Length
   *(destBuffer++) = srcLength;
   // Payload
-  uint8_t checksum = 0;
+  uint32_t checksum32 = 0;
   for (int i = 0; i < srcLength; i++) {
     *(destBuffer++) = *(srcBuffer);
-    checksum += *(srcBuffer++);
+    checksum32 += *(srcBuffer++);
   }
   // Checksum
-  *(destBuffer++) = checksum;
+  *(destBuffer++) = static_cast<uint8_t>(checksum32 & 0xFF);
   // Footer
   *(destBuffer++) = WX_SERIAL_PACKET_FOOTER;
 

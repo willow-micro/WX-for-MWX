@@ -36,6 +36,7 @@ private:
   int payloadLength;
   uint8_t payloadBuffer[WX_SERIAL_PACKET_MAX_PAYLOAD_LENGTH];
   int payloadBufferIndex;
+  uint32_t checksum32;
   uint8_t checksum;
 
 public:

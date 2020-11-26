@@ -46,6 +46,7 @@ bool wx::SerialUnpacker::available(const uint8_t fragment)
       this->state = WAITING_FOR_LENGTH;
       this->payloadLength = 0;
       this->payloadBufferIndex = 0;
+      this->checksum32 = 0;
       this->checksum = 0;
     }
     break;
@@ -54,11 +55,12 @@ bool wx::SerialUnpacker::available(const uint8_t fragment)
     this->payloadLength = fragment;
     break;
   case COLLECTING_PAYLOAD:
-    if (this->payloadBufferIndex < this->payloadLength) {
+    if (this->payloadBufferIndex < this->payloadLength - 1) {
       this->payloadBuffer[this->payloadBufferIndex++] = fragment;
-      this->checksum += fragment;
-    } else if (this->payloadBufferIndex == this->payloadLength) {
+      this->checksum32 += fragment;
+    } else if (this->payloadBufferIndex == this->payloadLength - 1) {
       this->state = WAITING_FOR_CHECKSUM;
+      this->checksum = static_cast<uint8_t>(this->checksum32 & 0xFF);
     } else {
       this->state = WAITING_FOR_HEADER;
     }

@@ -39,7 +39,7 @@ void wx::SerialUnpacker::init(void)
 bool wx::SerialUnpacker::available(const uint8_t fragment)
 {
   bool isAvailable = false;
-
+  Serial.printfmt("F: %02x\n", fragment);
   switch (this->state) {
   case WAITING_FOR_HEADER:
     if (fragment == WX_SERIAL_PACKET_HEADER) {

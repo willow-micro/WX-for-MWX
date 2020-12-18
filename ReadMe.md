@@ -1,35 +1,39 @@
 
 # Table of Contents
 
-1.  [About](#org8a11d24)
-2.  [WX for TWE-Lite MWX](#orgf88b14f)
-    1.  [Module List](#org793a169)
-    2.  [See](#org454a7f3)
+1.  [About](#orgb729727)
+2.  [WX for TWE-Lite MWX](#org2edfc2e)
+    1.  [Module List](#org9c57ce2)
+    2.  [See](#org5b90f56)
 
 
-<a id="org8a11d24"></a>
+<a id="orgb729727"></a>
 
 # About
 
 Willow eXtension Library (WX) は，組み込みマイコン用の拡張フレームワークです。
 
+WX for MWXは、無線マイコンTWE-Liteのために開発元のモノワイヤレスが開発中のライブラリ"MWX"上で動作します。
 
-<a id="orgf88b14f"></a>
+
+<a id="org2edfc2e"></a>
 
 # WX for TWE-Lite MWX
 
 
-<a id="org793a169"></a>
+<a id="org9c57ce2"></a>
 
 ## Module List
 
--   Timekeeper: 一定時間経過後、または一定間隔で関数を呼び出すためのモジュール
+-   Timekeeper: 一定時間経過後、または一定間隔で任意の関数を呼び出すためのモジュール
 -   AQM0802: 8x2文字I2C接続LCD(ST7032i搭載)を使用するためのモジュール
--   ATP3011: AquesTalk音声合成LSI(ATP3011)をSPIで利用するためのモジュール
--   FIFO: templateを使用した可変長リングバッファ
+-   ATP3011: AquesTalk音声合成LSIをSPI(Mode3)で利用するためのモジュール
+-   FIFO: C++のTemplateを使用した可変長リングバッファ
+-   SerialPacker:  任意のバイト列からシリアル送信用のパケットを生成するためのモジュール
+-   SerialUnpacker: シリアル受信したパケットにエラーチェックを行いバイト列を格納するためのモジュール
 
 
-<a id="org454a7f3"></a>
+<a id="org5b90f56"></a>
 
 ## See
 

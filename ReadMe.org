@@ -2,12 +2,16 @@
 * About
 Willow eXtension Library (WX) は，組み込みマイコン用の拡張フレームワークです。
 
+WX for MWXは、無線マイコンTWE-Liteのために開発元のモノワイヤレスが開発中のライブラリ"MWX"上で動作します。
+
 * WX for TWE-Lite MWX
 ** Module List
- - Timekeeper: 一定時間経過後、または一定間隔で関数を呼び出すためのモジュール
+ - Timekeeper: 一定時間経過後、または一定間隔で任意の関数を呼び出すためのモジュール
  - AQM0802: 8x2文字I2C接続LCD(ST7032i搭載)を使用するためのモジュール
- - ATP3011: AquesTalk音声合成LSI(ATP3011)をSPIで利用するためのモジュール
- - FIFO: templateを使用した可変長リングバッファ
+ - ATP3011: AquesTalk音声合成LSIをSPI(Mode3)で利用するためのモジュール
+ - FIFO: C++のTemplateを使用した可変長リングバッファ
+ - SerialPacker:  任意のバイト列からシリアル送信用のパケットを生成するためのモジュール
+ - SerialUnpacker: シリアル受信したパケットにエラーチェックを行いバイト列を格納するためのモジュール
 
 ** See
 以下に示すMWXの制限事項により，一部C++的に好ましくない実装があります．

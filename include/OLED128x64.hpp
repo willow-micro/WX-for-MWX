@@ -53,6 +53,7 @@ public:
   void invertColor(void);
   void update(void);
   void drawPointAt(const int x, const int y, const int value);
+  void drawLine(int x0, const int x1, int y0, const int y1);
   void putCharAt(const int x, const int y, const char16_t c, const OLED_CharSize_e csize);
   void println(const int x, const int y, const char16_t* const str, const int len, const OLED_CharSize_e csize);
   void println(const int row, const char16_t* const str, const int len, const OLED_CharSize_e csize);

@@ -156,6 +156,46 @@ void wx::OLED128x64::drawPointAt(const int x, const int y, const int value)
   return;
 }
 
+void wx::OLED128x64::drawLine(int x0, const int x1, int y0, const int y1)
+{
+  int dx = std::abs(x1 - x0);
+  int dy = std::abs(y1 - y0);
+  if (dx == 0) {
+    // Vertical Line
+    for (int y = y0; y <= y1; y++) {
+      this->drawPointAt(x0, y, 1);
+    }
+  } else if (dy == 0) {
+    // Horizontal Line
+    for (int x = x0; x <= x1; x++) {
+      this->drawPointAt(x, y0, 1);
+    }
+  } else {
+    // Slanting Line
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+    int err = dx - dy;
+    while(1) {
+      this->drawPointAt(x0, y0, 1);
+      if (x0 == x1 && y0 == y1) {
+        break;
+      }
+      int err2 = 2 * err;
+      if (err2 > -dy) {
+        err -= dy;
+        x0 += sx;
+      }
+      if (err2 < dx) {
+        err += dx;
+        y0 += sy;
+      }
+    }
+  }
+
+  return;
+}
+
+
 void wx::OLED128x64::putCharAt(const int x, const int y, const char16_t c, const OLED_CharSize_e csize)
 {
   const uint8_t* const bitmap = this->misaki.bitmapForCode(c);

@@ -18,7 +18,7 @@
 #include "ATP3011.hpp"
 #include "FIFO.hpp"
 #include "Timekeeper.hpp"
-
+#include "OLED128x64.hpp"
 
 namespace wx {
 

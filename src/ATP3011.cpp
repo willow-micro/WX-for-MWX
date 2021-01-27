@@ -55,6 +55,9 @@ wx::ATP3011::~ATP3011(void)
 
 void wx::ATP3011::init(void)
 {
+  // Wait for TTS Startup
+  delay(80);
+
   // Initialize messages
   for (int i = 0; i < ATP3011_MAX_MESSAGES; i++) {
     memset(this->messages[i], ' ', ATP3011_MAX_MESSAGE_LENGTH - 1);
@@ -72,6 +75,13 @@ void wx::ATP3011::init(void)
   // Timekeeper for polling
   wx::Timekeeper::getInstance().init();
 
+  // Dummy data for startup
+  if (auto&& trs = SPI.get_rwer()) {
+    trs << 0xFF;
+    trs >> null_stream(1);
+  }
+
+  // Set Ready
   wx::ATP3011::isAvailable = true;
 
   return;
@@ -119,6 +129,7 @@ wx::result_e wx::ATP3011::speech(const char* fstr)
     uint8_t response;
 
     while (*(fstr) != '\r' && *(fstr) != '\0') {
+      delayMicroseconds(20);
       trs << *(fstr++);
       trs >> response;
       if (response != '>') {

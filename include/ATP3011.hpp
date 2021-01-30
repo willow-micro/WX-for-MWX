@@ -32,7 +32,7 @@ using wx::FIFO;
 #define ATP3011_MAX_MESSAGE_LENGTH 256
 #define ATP3011_MAX_RESERVATIONS 8
 #define ATP3011_POLLING_CYCLE 15
-#define ATP3011_POLLING_TIMEKEEPER_ID 9
+#define ATP3011_POLLING_TIMEKEEPER_ID 0
 
 
 // Class //////////////////////////////////////////////////////////////////////

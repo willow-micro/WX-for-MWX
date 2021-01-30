@@ -19,7 +19,7 @@ namespace wx {
 // Assembly Command ///////////////////////////////////////////////////////////
 // NOP
 // This macro is usable at ONLY JN516x Series.
-#define NOP asm volatile ("b.nop;" : : )
+#define NOP asm volatile ("b.nop;")
 
 // Disable all interuupts and save the status of interrupts.
 // This macro is usable at ONLY JN516x Series.

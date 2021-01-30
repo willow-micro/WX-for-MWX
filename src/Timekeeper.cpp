@@ -22,10 +22,9 @@ bool wx::Timekeeper::hasInit = false;
 // So, initialize the private static member instance here.
 wx::Timekeeper wx::Timekeeper::instance = wx::Timekeeper();
 
-
 // Methods ////////////////////////////////////////////////////////////////////
 
-wx::Timekeeper::Timekeeper(void)
+wx::Timekeeper::Timekeeper(void) // C++ Constructors are not called within the MWX Library.
   // : wxTime{0},
   //   alarmISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
   //   cyclicISRPtrArray{NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
@@ -179,4 +178,14 @@ void wx::Timekeeper::stopCyclic(const int id)
   this->cyclicEnableArray[id] = false;
 
   return;
+}
+
+bool wx::Timekeeper::checkIfAlarmEnabledForID(const int id)
+{
+  return this->alarmEnableArray[id];
+}
+
+bool wx::Timekeeper::checkIfCyclicEnabledForID(const int id)
+{
+  return this->cyclicEnableArray[id];
 }

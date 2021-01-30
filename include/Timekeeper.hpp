@@ -26,7 +26,7 @@
 // Definitions ////////////////////////////////////////////////////////////////
 namespace wx {
 
-#define TIMEKEEPER_ISR_MAX 10
+#define TIMEKEEPER_ISR_MAX 16
 #define WXTIME_MAX 0xFFFFFFFF
 
 // Timekeeper ISR function pointer type
@@ -56,7 +56,7 @@ private:
 
 public:
   static Timekeeper& getInstance() {
-    // Because of a limitation of JN516x, cannot use static instance in a static method.
+    // Because of a limitation of the JN516x, We Cannot Use Static Instance in a Static Method.
     // static Timekeeper tk;
     // return tk;
     return instance;
@@ -69,6 +69,8 @@ public:
   void startCyclic(const int id, timekeeperISRPtr_t isr, const uint32_t cycleTimeMs);
   void stopAlarm(const int id);
   void stopCyclic(const int id);
+  bool checkIfAlarmEnabledForID(const int id);
+  bool checkIfCyclicEnabledForID(const int id);
 };
 
 }

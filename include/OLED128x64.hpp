@@ -50,14 +50,20 @@ public:
   ~OLED128x64(void);
   void init(void);
   void clearAll(void);
+  void clearRegion(const int x0, const int x1, const int y0, const int y1);
   void invertColor(void);
+  void invertRegionColor(const int x0, const int x1, const int y0, const int y1);
   void update(void);
   void drawPointAt(const int x, const int y, const int value);
   void drawLine(int x0, const int x1, int y0, const int y1);
+  void drawRectangle(const int x0, const int x1, const int y0, const int y1);
+  void drawRoundRectangle(const int x0, const int x1, const int y0, const int y1);
+  void fillRegion(const int x0, const int x1, const int y0, const int y1);
   void putCharAt(const int x, const int y, const char16_t c, const OLED_CharSize_e csize);
   void println(const int x, const int y, const char16_t* const str, const int len, const OLED_CharSize_e csize);
   void println(const int row, const char16_t* const str, const int len, const OLED_CharSize_e csize);
-  void fillWithLogo(void);
+  void drawBitmap(const int x, const int y, const uint8_t* data, const int cols, const int startRow, const int endRow);
+  void drawBitmapWithCovering(const int x, const int y, const uint8_t* data, const int cols, const int startRow, const int endRow, const int coverSize, bool* keys, const int keyCount = 4);
 };
 
 }

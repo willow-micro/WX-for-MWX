@@ -11,7 +11,7 @@
 
 #include "MisakiSuperLimited.hpp"
 
-uint8_t* MisakiSuperLimited::bitmapForCode(uint32_t utf16Code)
+uint8_t* MisakiSuperLimited::bitmapForCode(const uint32_t utf16Code)
 {
   int index = 0;
   // O(N)
@@ -21,4 +21,9 @@ uint8_t* MisakiSuperLimited::bitmapForCode(uint32_t utf16Code)
     }
   }
   return const_cast<uint8_t*>(MisakiSuperLimitedBitmapData[index]);
+}
+
+uint16_t MisakiSuperLimited::codeForNumber(const int num)
+{
+  return MisakiSuperLimitedCodeTable[147+num];
 }

@@ -271,6 +271,30 @@ void wx::OLED128x64::putCharAt(const int x, const int y, const char16_t c, const
   return;
 }
 
+void wx::OLED128x64::putCharAt(const int x, const int y, const uint16_t c, const OLED_CharSize_e csize)
+{
+  const uint8_t* const bitmap = this->misaki.bitmapForCode(c);
+
+  if (csize == OLED_CHAR_X1) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        this->drawPointAt(x + j, y + i, (bitmap[i] >> (7-j)) & 0x01);
+      }
+    }
+  } else if (csize == OLED_CHAR_X2) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        this->drawPointAt(x + j*2, y + i*2, (bitmap[i] >> (7-j)) & 0x01);
+        this->drawPointAt(x + j*2 + 1, y + i*2, (bitmap[i] >> (7-j)) & 0x01);
+        this->drawPointAt(x + j*2, y + i*2 + 1, (bitmap[i] >> (7-j)) & 0x01);
+        this->drawPointAt(x + j*2 + 1, y + i*2 + 1, (bitmap[i] >> (7-j)) & 0x01);
+      }
+    }
+  }
+
+  return;
+}
+
 void wx::OLED128x64::println(const int x, const int y, const char16_t* const str, const int len, const OLED_CharSize_e csize)
 {
   for (int i = 0; i < len; i++) {
@@ -304,6 +328,49 @@ void wx::OLED128x64::println(const int row, const char16_t* const str, const int
 
   return;
 }
+
+void wx::OLED128x64::printNumberAt(const int x, const int y, const int num, const int digits, const OLED_CharSize_e csize)
+{
+  int calDigits = 0;
+  int numCopy = num;
+  while (numCopy > 0) {
+    numCopy /= 10;
+    calDigits++;
+  }
+
+  if (calDigits > digits) {
+    return;
+  }
+  if (csize == OLED_CHAR_X1) {
+    if ((int)((128 - x) / 8) <= digits ) {
+      return;
+    }
+  } else if (csize == OLED_CHAR_X2) {
+    if ((int)((128 - x) / 16) <= digits ) {
+      return;
+    }
+  }
+
+  int ni;
+  uint16_t utf16CodeForNum;
+
+  if (csize == OLED_CHAR_X1) {
+    for (int i = 0; i < digits; i++) {
+      ni = num / (10 * (digits - 1 - i));
+      utf16CodeForNum = this->misaki.codeForNumber(ni);
+      this->putCharAt(x + 8 * i, y, utf16CodeForNum, csize);
+    }
+  } else if (csize == OLED_CHAR_X2) {
+    for (int i = 0; i < digits; i++) {
+      ni = num / (10 * (digits - 1 - i));
+      utf16CodeForNum = this->misaki.codeForNumber(ni);
+      this->putCharAt(x + 16 * i, y, utf16CodeForNum, csize);
+    }
+  }
+
+  return;
+}
+
 
 void wx::OLED128x64::drawBitmap(const int x, const int y, const uint8_t* data, const int cols, const int startRow, const int endRow)
 {

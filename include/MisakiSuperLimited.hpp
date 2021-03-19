@@ -14,8 +14,8 @@
 
 // Modules ////////////////////////////////////////////////////////////////////
 #include <cstdint>
-#include <array>
-#include <unordered_map>
+// #include <array>
+// #include <unordered_map>
 
 // Definitions ////////////////////////////////////////////////////////////////
 const uint8_t MisakiSuperLimitedBitmapData[410][8] = {
@@ -844,12 +844,14 @@ const uint16_t MisakiSuperLimitedCodeTable[410] = {
   0x2542
 };
 
+
 // Class //////////////////////////////////////////////////////////////////////
 class MisakiSuperLimited {
 public:
   MisakiSuperLimited() {};
   ~MisakiSuperLimited() {};
-  uint8_t* bitmapForCode(uint32_t utf16Code);
+  uint8_t* bitmapForCode(const uint32_t utf16Code);
+  uint16_t codeForNumber(const int num);
 };
 
 #endif

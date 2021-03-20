@@ -19,6 +19,7 @@
 // Modules ////////////////////////////////////////////////////////////////////
 #include <TWELITE>
 #include <string.h>
+#include <math.h>
 #include "wxcommon.hpp"
 #include "MisakiSuperLimited.hpp"
 
@@ -65,6 +66,7 @@ public:
   void println(const int x, const int y, const char16_t* const str, const int len, const OLED_CharSize_e csize);
   void println(const int row, const char16_t* const str, const int len, const OLED_CharSize_e csize);
   void printNumberAt(const int x, const int y, const int num, const int digits, const OLED_CharSize_e csize);
+  void printNumberAt(const int x, const int y, const float num, const int digits, const int intDigits, const OLED_CharSize_e csize);
   void drawBitmap(const int x, const int y, const uint8_t* data, const int cols, const int startRow, const int endRow);
   void drawBitmapWithCovering(const int x, const int y, const uint8_t* data, const int cols, const int startRow, const int endRow, const int coverSize, bool* keys, const int keyCount = 4);
 };
